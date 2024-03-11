@@ -1,7 +1,5 @@
 package be.jonas.boon.portfolio.DTO;
 
-import java.util.Set;
-
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,8 +14,8 @@ public class PostsDTO {
     public class Mapper {
         public static PostsDTO mapTo(String title){
             return PostsDTO.builder()
-            .withTitle(title)
-            .build();
+                    .withTitle(title)
+                    .build();
         }
     }
 }
