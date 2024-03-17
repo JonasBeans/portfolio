@@ -1,10 +1,10 @@
 package be.jonas.boon.portfolio.controller;
 
 import be.jonas.boon.portfolio.DTO.PostsDTO;
-import be.jonas.boon.portfolio.service.BlogService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import be.jonas.boon.portfolio.service.PageService;
+import be.jonas.boon.portfolio.validation.page.PageInputValidation;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
 
@@ -12,14 +12,20 @@ import java.util.Set;
 @RequestMapping("api/v1/blog")
 public class BlogController {
 
-    private final BlogService blogService;
+    private final PageService pageService;
 
-    public BlogController(BlogService blogService){
-        this.blogService = blogService;
+    public BlogController(PageService pageService){
+        this.pageService = pageService;
     }
 
     @GetMapping
-    public Set<PostsDTO> getBlogPostNames(){
-        return blogService.getBlogPostTitles();
+    public Set<String> getBlogPostNames(){
+        return pageService.getPageTitles();
+    }
+
+    @GetMapping("/byName")
+    public PostsDTO getPageByName(@RequestParam String title){
+        PageInputValidation.validate(title);
+        return pageService.getPageByName(title);
     }
 }
